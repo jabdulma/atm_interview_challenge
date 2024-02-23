@@ -20,8 +20,10 @@ const menuItemSx = {flexGrow: 1, justifyContent:'space-between', backgroundColor
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import {Backspace}  from '@mui/icons-material';
 
+//Example data, replace with DB / API connection
 
-
+const exampleStr = `[{"accountNo":1,"accountName":"Johns Checking","amount":1000,"type":"checking"},{"accountNo":2,"accountName":"Janes Savings","amount":2000,"type":"savings"},{"accountNo":3,"accountName":"Jills Credit","amount":-3000,"type":"credit"},{"accountNo":4,"accountName":"Bobs Checking","amount":40000,"type":"checking"},{"accountNo":5,"accountName":"Bills Savings","amount":50000,"type":"savings"},{"accountNo":6,"accountName":"Bills Credit","amount":-60000,"type":"credit"},{"accountNo":7,"accountName":"Nancy Checking","amount":70000,"type":"checking"},{"accountNo":8,"accountName":"Nancy Savings","amount":80000,"type":"savings"},{"accountNo":9,"accountName":"Nancy Credit","amount":-90000,"type":"credit"}]`
+let exampleData = JSON.parse(exampleStr);
 
 const titleMessage = "Welcome to this JohnBank ATM"
 
