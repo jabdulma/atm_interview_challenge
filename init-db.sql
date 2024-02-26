@@ -23,15 +23,3 @@ VALUES
     (7, 'Nancy Checking', 70000, 'checking'),
     (8, 'Nancy Savings', 80000, 'savings'),
     (9, 'Nancy Credit', -90000, 'credit');
-
-
--- CREATE TABLE
-DROP TABLE IF EXISTS transactions;
-CREATE TABLE accounts (
-    account_number INTEGER PRIMARY KEY,
-    
-    type VARCHAR NOT NULL
-);
-
-ALTER TABLE transactions ADD CONSTRAINT transation_verify_type
-CHECK (type IN ('withdrawl', 'deposit', 'balance'));
