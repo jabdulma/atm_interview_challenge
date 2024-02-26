@@ -24,12 +24,20 @@ const InbetweenPage = ({nav, pageType, timer = 2000, destination}) => {
 
     const inbetweenPages = {};
     inbetweenPages[pages.givecash] = (
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1 }}>
+            <Grid xs={12} sx={{marginTop:'20px'}}>
+                <h1>Dispensing Cash:</h1>
+            </Grid>
+        </Grid>
+
+
+    );
+    inbetweenPages[pages.takecash] = (
         <h6>Test</h6>
     );
 
     return (
         <Box name="nothing" sx={{ bgcolor: '#cfe8fc', width: '700px', height: '500px', border: '1px solid green', alignItems: "center" }}>
-            Test
             {inbetweenPages[pageType]}
         </Box>);
 }

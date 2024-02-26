@@ -10,7 +10,7 @@ import {AppBar, Button, Paper, TextField, Toolbar, Tooltip, Typography} from "@m
 import pages from './globals';
 import WithDrawalScreen from './components/WithDrawalScreen'
 import InbetweenPage from "./components/InbetweenPage.jsx";
-
+import DepositScreen from "./components/DepositScreen.jsx";
 
 //Main Menu Imports & consts
 import {PriceCheck, DoubleArrow, LocalAtm, RequestQuote, Money}  from '@mui/icons-material';
@@ -29,7 +29,7 @@ const titleMessage = "Welcome to this JohnBank ATM"
 function App() {
   //const [count, setCount] = useState(0)
   const [title, setTitle] = useState("")
-  const [currPage, setCurrPage] = useState("withdrawal")
+  const [currPage, setCurrPage] = useState("inbetweenWithdrawal")
 
     const navigator = {
       setPage: setCurrPage,
@@ -63,6 +63,7 @@ function App() {
             {
                 {
                     'withdrawal': <WithDrawalScreen nav={navigator} setPage={setCurrPage} setTitle={setTitle} />,
+                    'deposit': <DepositScreen nav={navigator} setPage={setCurrPage} setTitle={setTitle} />,
                     'mainMenu':
                         <Box key="mainMenu" name="mainMenu" sx={{ bgcolor: '#cfe8fc', width: '700px', height: '500px', border: '1px solid green', alignItems: "center" }}>
                             <Box sx={{ paddingTop: '50px', flexGrow: 1 }}>Please select an option below:</Box>
@@ -70,9 +71,9 @@ function App() {
                                    justifyContent="center"
                                    alignItems="center" sx={{paddingTop: '50px'}}>
                                     <Stack spacing={2}>
-                                        <Button  variant="contained" size="large" sx={menuItemSx} ><Money fontSize="large" sx={{marginRight: "10px"}}/> Make a WithDrawl <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
-                                        <Button  variant="contained" size="large" sx={menuItemSx} ><LocalAtm fontSize="large" sx={{marginRight: "10px"}}/> Make a Deposit <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
-                                        <Button  variant="contained" size="large" sx={menuItemSx} ><RequestQuote fontSize="large" sx={{marginRight: "10px"}}/> Check Balance <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
+                                        <Button onClick={() => {setCurrPage(pages.withdrawal)}} variant="contained" size="large" sx={menuItemSx} ><Money fontSize="large" sx={{marginRight: "10px"}}/> Make a WithDrawl <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
+                                        <Button onClick={() => {setCurrPage(pages.deposit)}} variant="contained" size="large" sx={menuItemSx} ><LocalAtm fontSize="large" sx={{marginRight: "10px"}}/> Make a Deposit <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
+                                        <Button onClick={() => {setCurrPage(pages.balance)}} variant="contained" size="large" sx={menuItemSx} ><RequestQuote fontSize="large" sx={{marginRight: "10px"}}/> Check Balance <DoubleArrow fontSize="large" sx={{marginLeft: "10px"}}/></Button>
                                     </Stack>
                             </Box>
                         </Box>,

@@ -12,6 +12,12 @@ const WithDrawalScreen = ({nav}) => {
     //withdrawl state
     const [widthdrawalAmount, setWD] = useState("0");
 
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(() => {
+        nav.setTitle("Withdrawal Funds")
+        setWD(0)
+    }, []);
+
     function handlePhoneButtonPush(num, currVal, changeFunc){
         let newVal = currVal.toString();
 
@@ -50,6 +56,7 @@ const WithDrawalScreen = ({nav}) => {
         val = val.length === 0 ? "0" : val;
         //Remove leading zeroes by converting to int
         val = parseInt(val, 10);
+        val = val.toString();
         return val;
     }
 
@@ -65,16 +72,12 @@ const WithDrawalScreen = ({nav}) => {
             //Error code here
             return;
         }
-        debugger;
-        console.log(pages.givecash)
         nav.setPage(pages.givecash);
     }
 
-    // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-        nav.setTitle("Withdrawal Funds")
-        setWD(0)
-    }, []);
+    function cancelOut(){
+        nav.setPage(pages.mainmenu);
+    }
 
     return (
     <Box name="withdrawal" sx={{ bgcolor: '#cfe8fc', width: '700px', height: '500px', border: '1px solid green', alignItems: "center" }}>
@@ -103,7 +106,7 @@ const WithDrawalScreen = ({nav}) => {
                                        label="Withdrawal Amount" />
                         </Paper>
                         <Button sx={{marginTop:'20px'}} onClick={getCash} variant="contained" size="large">Get Cash</Button>
-                        <Button sx={{marginTop:'20px'}} variant="contained" size="large">Cancel</Button>
+                        <Button sx={{marginTop:'20px'}} onClick={cancelOut} variant="contained" size="large">Cancel</Button>
                     </Stack>
 
                 </Grid>
