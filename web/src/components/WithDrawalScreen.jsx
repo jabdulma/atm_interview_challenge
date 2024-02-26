@@ -7,10 +7,13 @@ import Box from '@mui/material/Box';
 import Stack from "@mui/material/Stack";
 import PropTypes from 'prop-types';
 import pages from '../globals';
+import ErrorDialog from "./ErrorDialog.jsx";
 
 const WithDrawalScreen = ({nav}) => {
     //withdrawl state
     const [widthdrawalAmount, setWD] = useState("0");
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errMsg, setErrMsg] = useState("")
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -68,10 +71,17 @@ const WithDrawalScreen = ({nav}) => {
     }
 
     function getCash(){
+        //Local Error Handling
         if(widthdrawalAmount % 5 > 0){
-            //Error code here
+            setErrMsg("Please enter a value divisible by 5");
+            setErrorOpen(true);
+            return;
+        } else if (widthdrawalAmount > 200){
+            setErrMsg("Withdrawls cannot exceed 200 in a single transaction.");
+            setErrorOpen(true);
             return;
         }
+        //
         nav.setPage(pages.givecash);
     }
 
@@ -125,6 +135,7 @@ const WithDrawalScreen = ({nav}) => {
                 </Grid>
                 <Grid xs={1}></Grid>
             </Grid>
+            <ErrorDialog isVisible={errorOpen} title="Withdrawl error" setVisible={setErrorOpen} message={errMsg} />
         </Box>
     </Box>);
 }

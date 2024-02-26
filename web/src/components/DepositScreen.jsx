@@ -10,10 +10,15 @@ import PropTypes from 'prop-types';
 import pages from "../globals";
 import {cleanCashNumber} from "../globals";
 import PhoneButtons from "./PhoneButtons.jsx";
+import ErrorDialog from "./ErrorDialog.jsx";
 
 const DepositScreen = ({nav}) => {
     //withdrawl state
     const [depositAmount, setDA] = useState("0");
+    const [balance, setBalance] = useState("1000");
+    const [accountType, setAT] = useState("0");
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [errMsg, setErrMsg] = useState("")
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -30,6 +35,11 @@ const DepositScreen = ({nav}) => {
     }
 
     function takeCash(){
+        if(depositAmount > 1000){
+
+        } else if (accountType === "credit" && depositAmount > balance){
+
+        }
         nav.setPage(pages.takecash);
     }
 
@@ -75,6 +85,7 @@ const DepositScreen = ({nav}) => {
                 <Grid xs={1}></Grid>
             </Grid>
         </Box>
+        <ErrorDialog isVisible={errorOpen} title="Withdrawl error" setVisible={setErrorOpen} message={errMsg} />
     </Box>);
 }
 

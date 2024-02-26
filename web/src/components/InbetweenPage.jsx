@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import Stack from "@mui/material/Stack";
 import PropTypes from 'prop-types';
 import pages from '../globals';
-
+import depositCash from '../assets/deposit.gif';
+import withdrawalCash from '../assets/withdrawal.gif';
 const InbetweenPage = ({nav, pageType, timer = 2000, destination}) => {
     //withdrawl state
     //const [widthdrawalAmount, setWD] = useState("0");
@@ -28,12 +29,22 @@ const InbetweenPage = ({nav, pageType, timer = 2000, destination}) => {
             <Grid xs={12} sx={{marginTop:'20px'}}>
                 <h1>Dispensing Cash:</h1>
             </Grid>
+            <Grid xs={12}>
+                <img src={withdrawalCash} />
+            </Grid>
         </Grid>
 
 
     );
     inbetweenPages[pages.takecash] = (
-        <h6>Test</h6>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1 }}>
+            <Grid xs={12} sx={{marginTop:'20px'}}>
+                <h1>Please Submit Deposit</h1>
+            </Grid>
+            <Grid xs={12}>
+                <img style={{height: '300px'}} src={depositCash} />
+            </Grid>
+        </Grid>
     );
 
     return (

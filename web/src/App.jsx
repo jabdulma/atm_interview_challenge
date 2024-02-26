@@ -29,7 +29,7 @@ const titleMessage = "Welcome to this JohnBank ATM"
 function App() {
   //const [count, setCount] = useState(0)
   const [title, setTitle] = useState("")
-  const [currPage, setCurrPage] = useState("inbetweenWithdrawal")
+  const [currPage, setCurrPage] = useState(pages.withdrawal)
 
     const navigator = {
       setPage: setCurrPage,
@@ -89,8 +89,8 @@ function App() {
                                 <Button variant="contained" size="small" sx={{minHeight: '63px', maxHeight: '65px', margin:'0px', marginLeft:'10px'}} >Login</Button>
                             </Box>
                         </Box>,
-                    'inbetweenWithdrawal': <InbetweenPage nav={navigator} pageType={pages.givecash} timer={2000} destination={pages.mainmenu}></InbetweenPage>,
-                    'inbetweenDeposit': <InbetweenPage nav={navigator} pageType={pages.takecash} timer={2000} destination={pages.mainmenu}></InbetweenPage>
+                    'inbetweenWithdrawal': <InbetweenPage nav={navigator} pageType={pages.givecash} timer={3500} destination={pages.mainmenu}></InbetweenPage>,
+                    'inbetweenDeposit': <InbetweenPage nav={navigator} pageType={pages.takecash} timer={3500} destination={pages.mainmenu}></InbetweenPage>
                 }[currPage]
             }
         </Container>
