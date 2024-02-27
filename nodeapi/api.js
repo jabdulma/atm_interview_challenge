@@ -20,8 +20,10 @@ const queries = {
 
 }
 
+let transactionHistory = [];
+
 function createError(status, msg){
-    var errObj = {};
+    let errObj = {};
     errObj.status = status || 500;
     errObj.body = {message: msg};
     return {
@@ -66,20 +68,47 @@ app.put('/makeDeposit', (req, res) => {
     });
 })
 
-let makeAdjustment = (accountNum, amount, tType){
-    client.query(queries.getAccount, [req.body.accountNum], (err, result) => {
+let totalOfType = (accountNum, tType) => {
+    return 0;
+}
+
+let makeAdjustment = (accountNum, amount, tType, callback) => {
+    let adjustmentAmount = amount;
+
+    client.query(queries.getAccount, [accountNum], (err, result) => {
         if (err) {
             res.status(500).json(createError(500, "There was a critical error. Please sign in again."));
         } else {
             try{
-                var acc = result.rows[0];
-                if(acc.type === "credit"){
-
+                let acc = result.rows[0];
+                //Per email, credit accounts are to be treated as though they have no limit
+                if(tType === "withdrawal"){
+                    //Check for 200 in transaction, or 400 daily.
+                    if(adjustmentAmount > 200 || totalOfType(accountNum, tType) > 400){
+                        callback(createError(400, "Invalid amount withdrawn."));
+                    }
+                    //If we're doing a withdrawl, make the amount a negative
+                    adjustmentAmount = tType === "withdrawawl" ? adjustmentAmount * -1 : adjustmentAmount;
+                } else if (tType === "deposit") {
+                    if(adjustmentAmount > 1000){
+                        callback(createError(400, "Deposits are limited to 1000 per transaction."));
+                    } else if (acc.type === "credit" && ((acc.amount + adjustmentAmount) > 0)){
+                        callback(createError(400, "Amount deposited exceeds balance."));
+                    }
                 }
+                client.query(queries.setBalance, [adjustmentAmount, accountNum], (err, result) => {
+                    if (err) {
+                        res.status(500).json(createError(500, "There was a critical error. Please sign in again."));
+                    } else {
+                        console.log("Adjustment Made: " + adjustmentAmount, accountNum);
+                        console.log("Old amount: " + acc.amount);
+                        res.json( result.rows)
+                    }
+                });
+
             } catch (e) {
                 res.status(500).json(createError(500, "There was a critical error. Please sign in again."));
             }
-
         }
     });
 }
