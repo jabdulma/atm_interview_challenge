@@ -22,11 +22,7 @@ VALUES
     (6, 'Bills Credit', -60000, 'credit'),
     (7, 'Nancy Checking', 70000, 'checking'),
     (8, 'Nancy Savings', 80000, 'savings'),
-    (9, 'Nancy Credit', -90000, 'credit'),
-    (990, 'Test1 Credit', -1000, 'credit'),
-    (991, 'Test2 Checking', 300, 'checking'),
-    (992, 'Test2 Savings', 200, 'savings');
-
+    (9, 'Nancy Credit', -90000, 'credit');
 
 
 -- CREATE TABLE
@@ -40,12 +36,3 @@ CREATE TABLE transactions (
 
 ALTER TABLE transactions ADD CONSTRAINT verify_transactions
 CHECK (type IN ('withdrawal', 'deposit'));
-
--- LOAD DATAS
-INSERT INTO transactions
-    (account_number, amount, type, tdate)
-VALUES
-    (990, 200, 'withdrawal', '2/27/2024'),
-    (990, 200, 'withdrawal', '2/27/2024'),
-    (991, 200, 'withdrawal', '2/27/2024'),
-    (991, 200, 'withdrawal', '2/27/2024');

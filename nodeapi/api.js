@@ -1,5 +1,6 @@
 const express = require('express')
 const { Client } = require('pg');
+require('dotenv').config({path:'../.env'})
 
 const app = express()
 app.use(express.json());
@@ -7,11 +8,11 @@ app.use(express.json());
 const port = 3000
 
 const client = new Client({
-    user: 'user',
-    password: 'password',
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
     host: 'localhost',
     port: '5432',
-    database: 'challenge',
+    database: process.env.POSTGRES_DB
 });
 
 const queries = {
@@ -67,7 +68,7 @@ client.connect()
         console.error('Error connecting to PostgreSQL database', err);
 });
 
-app.post('/getAccount', (req, res) => {
+app.post('/api/getAccount', (req, res) => {
     if(!req.body.accountNum){
         res.status(400).json(createError(400, "No account number provided."));
     }
@@ -75,7 +76,6 @@ app.post('/getAccount', (req, res) => {
         if (err) {
             res.status(500).json(createError(500, "There was a critical error. Please sign in again."));
         } else {
-            console.log('Query result:', result.rows);
             res.json( result.rows)
         }
     });
@@ -171,7 +171,7 @@ let setBalance = (adjustmentAmount, balance, accountNum, tType, callback) => {
     });
 }
 
-app.post('/makeWithdrawal', (req, res) => {
+app.post('/api/makeWithdrawal', (req, res) => {
     if(!req.body.account || !req.body.amount){
         res.status(400).json(createError(400, "No account number or amount provided."));
         return;
@@ -184,12 +184,13 @@ app.post('/makeWithdrawal', (req, res) => {
 
 })
 
-app.post('/makeDeposit', (req, res) => {
+app.post('/api/makeDeposit', (req, res) => {
     if(!req.body.account || !req.body.amount){
         res.status(400).json(createError(400, "No account number or amount provided."));
     } else {
         makeAdjustment(req.body.account, req.body.amount, "deposit",  function(retObj) {
             sendBack(res, retObj)
+            return;
         })
     }
 })

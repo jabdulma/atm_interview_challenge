@@ -1,4 +1,5 @@
 const pages = {
+    login: "loginScreen",
     mainmenu: "mainMenu",
     withdrawal: "withdrawal",
     deposit: "deposit",

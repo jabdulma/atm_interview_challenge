@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react'
 
 import {Button, InputAdornment, Paper, TextField} from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import {Backspace}  from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Stack from "@mui/material/Stack";
 import PropTypes from 'prop-types';
@@ -11,8 +10,9 @@ import pages from "../globals";
 import {cleanCashNumber} from "../globals";
 import PhoneButtons from "./PhoneButtons.jsx";
 import ErrorDialog from "./ErrorDialog.jsx";
+import axios from "axios";
 
-const DepositScreen = ({nav}) => {
+const DepositScreen = ({accountData, nav}) => {
     //withdrawl state
     const [depositAmount, setDA] = useState("0");
     const [balance, setBalance] = useState("1000");
@@ -36,11 +36,20 @@ const DepositScreen = ({nav}) => {
 
     function takeCash(){
         if(depositAmount > 1000){
-
-        } else if (accountType === "credit" && depositAmount > balance){
-
+            setErrMsg("Deposits cannot exceed 1000 in a single transaction.");
+            setErrorOpen(true);
+            return;
         }
-        nav.setPage(pages.takecash);
+        axios.post("/api/makeDeposit", {
+            account: accountData.account_number,
+            amount: depositAmount
+        }).then((res) => {
+            nav.setPage(pages.takecash);
+            nav.updateAccount();
+        }).catch((error) => {
+            setErrMsg("There was an error, please try again. " + error.response?.data?.error);
+            setErrorOpen(true);
+        })
     }
 
     function cancelOut(){
@@ -48,7 +57,7 @@ const DepositScreen = ({nav}) => {
     }
 
     return (
-    <Box name="deposit" sx={{ bgcolor: '#cfe8fc', width: '700px', height: '500px', border: '1px solid green', alignItems: "center" }}>
+    <Box name="deposit" sx={{ bgcolor: '#cfe8fc', width: '700px', height: '500px', alignItems: "center" }}>
         <Box sx={{ paddingTop: '50px', flexGrow: 1 }}>Please Enter a Deposit Amount: </Box>
         <Box   display="flex"
                justifyContent="center"
@@ -90,6 +99,7 @@ const DepositScreen = ({nav}) => {
 }
 
 DepositScreen.propTypes = {
+    accountData: PropTypes.object,
     nav: PropTypes.object
 }
 

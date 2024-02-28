@@ -17,7 +17,7 @@ const PhoneButtons = ({inVal, setAmount}) => {
         if(num === "del"){
             newVal = cleanCashNumber(newVal.slice(0, -1));
         } else if (num === "x"){
-            newVal = cleanCashNumber("");
+            newVal = cleanCashNumber("0");
         } else {
             newVal =  cleanCashNumber(newVal + num.toString());
         }
