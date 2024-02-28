@@ -8,7 +8,7 @@ const pages = {
     balance: "checkBalance"
 }
 
-export function cleanCashNumber(val){
+export function cleanCashNumber(val) {
     //Remove alphabet characters
     val = val.replace(/[a-zA-Z]/g, '')
     //Set empty string to 0

@@ -4,9 +4,6 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import PropTypes from 'prop-types';
 const ErrorDialog = ({isVisible, setVisible, title, message}) => {
 
-    // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-    }, []);
 
     const handleClose = () => {
         setVisible(false);
