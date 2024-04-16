@@ -1,3 +1,9 @@
+### A quick note:
+
+This project was based off the interview challenge from Advisor's Excel.  During the interview I asked permission to keep this on my GitHub and was given verbal permission to do so.  The ATM software was a fun and engaging interview question and something I'd consider imitating if I were in a hiring position. I’m happy to leave it as part of my GitHub portfolio!  My code can be seen in the `web` and `nodeapi` folders.  The original readme follows.
+
+---
+
 Hello! Welcome to the Advisor's Excel coding challenge. The goal of this exercise is to give us an idea of how you write code, and to see your communication style. When you complete the challenge, our team will review your code and if accepted, we will meet for an interview in which we will discuss your work and review with you.
 
 We do ask that you complete this project in Javascript/Typescript, though you may use any frameworks, libraries, or packages you would like.
